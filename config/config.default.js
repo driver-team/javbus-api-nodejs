@@ -39,7 +39,12 @@ module.exports = appInfo => {
   config.mongoose = {
     url: 'mongodb://localhost:27017/javbus',
     options: {}
-  }
+  };
+  
+  //配置跨域白名单
+  config.security =  {
+    domainWhiteList: ['http://localhost:8899'],
+  };
 
 
   return config;
