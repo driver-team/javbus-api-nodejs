@@ -9,3 +9,9 @@ exports.nunjucks = {
   enable: true,
   package: 'egg-view-nunjucks'
 };
+
+//开启mongoose
+exports.mongoose = {
+  enable: true,
+  package: 'egg-mongoose',
+};

@@ -28,9 +28,11 @@ module.exports = app => {
      */
     success(data){
       this.ctx.body = {
-        success:true,
+        status:200,
+        message:"",
         data,
-      }
+      };
+
       this.ctx.status = 200;
     }
 
@@ -39,6 +41,14 @@ module.exports = app => {
       this.ctx.throw(404,msg);
     }
 
+    fail(e){
+      this.ctx.body = {
+        status:403,
+        message:e
+      };
+
+      this.ctx.status = 200;
+    }
 
   }
   app.Controller = CustomController;

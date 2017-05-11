@@ -7,7 +7,7 @@ module.exports = app=>{
     //加*表示这是一个generator协程
     async list(){
       const ctx = this.ctx;
-      const {pageSize } = this.app.config.news;
+      const { pageSize } = this.app.config.news;
       const page = ctx.query.page || 1;
 
 
@@ -29,6 +29,8 @@ module.exports = app=>{
       /**测试基类的方法**/
       this.success(["111","2222"]);
     }
+
+
 
 
   }

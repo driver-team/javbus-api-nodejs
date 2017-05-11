@@ -25,10 +25,23 @@ module.exports = appInfo => {
     pageSize: 30,
     serverUrl: 'https://hacker-news.firebaseio.com/v0',
   };
+  //配置javabus站点属性
+  config.javbus = {
+    pageSize: 30,
+  }
+
   //配置日志相关属性
   config.logger = {
     consoleLevel: 'DEBUG',
   };
+
+  //配置mongoose数据库
+  config.mongoose = {
+    url: 'mongodb://localhost:27017/javbus',
+    options: {}
+  }
+
+
   return config;
 };
 
