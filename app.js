@@ -20,6 +20,7 @@ module.exports = app => {
     app.logger.debug('启动之前的操作 ');
   });
 
+
   //定义Controller的父类
   class CustomController extends app.Controller{
     /**
@@ -27,13 +28,20 @@ module.exports = app => {
      * @param data
      */
     success(data){
+      let message = data.hasOwnProperty("message")?data.message:"";
+      if(data.message){
+        data.message = undefined;
+        delete data.message;
+      }
       this.ctx.body = {
-        status:200,
-        message:"",
+        status:data.hasOwnProperty("status")?data.status:200,
+        message:message,
         data,
       };
-
       this.ctx.status = 200;
+      this.ctx.set("Access-Control-Allow-Origin","*");
+      this.ctx.set("Access-Control-Allow-Credentials","true");
+      this.ctx.set("Access-Control-Allow-Methods","*");
     }
 
     notFound(msg){
@@ -42,11 +50,12 @@ module.exports = app => {
     }
 
     fail(e){
-      this.ctx.body = {
-        status:403,
-        message:e
-      };
-
+      if(e.hasOwnProperty("status") && e.hasOwnProperty("message")){
+        this.ctx.body = e
+      }
+      else{
+        this.ctx.body = {status:500, message:e};
+      }
       this.ctx.status = 200;
     }
 

@@ -3,9 +3,11 @@
  * Created by cly on 2017/5/11.
  */
 
-module.exports = app=>{
-  const mongoose = app.mongoose;
+"use stricts";
+module.exports = app =>{
+  const mongoose = app.mongoose.javbus;
   const Schema = mongoose.Schema;
+  //var connection = mongoose.createConnection("mongodb://localhost:27017/javbus");
   const detailSchema = Schema({
     href:String,
     title:String,
@@ -24,9 +26,6 @@ module.exports = app=>{
     mvImageBig:Array,
     mvMagnets:Array,
   });
-
-
-
+  //return null;
   return mongoose.model("detail",detailSchema);
-
 }

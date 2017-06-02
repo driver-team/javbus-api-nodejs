@@ -4,12 +4,18 @@
   "description": "",
   "private": true,
   "dependencies": {
+    "crypto": "0.0.3",
     "egg": "^1.1.0",
     "egg-cors": "^1.1.0",
-    "egg-mongoose": "^2.0.0",
-    "egg-view-nunjucks": "^2.1.0"
+    "egg-jwt": "^2.0.0",
+    "egg-validate": "^1.0.0",
+    "egg-view-nunjucks": "^2.1.0",
+    "moment": "^2.18.1",
+    "nodemailer": "^4.0.1",
+    "uuid": "^3.0.1"
   },
   "devDependencies": {
+    "egg-development-proxyworker": "^1.0.0",
     "autod": "^2.8.0",
     "egg-bin": "^3.3.0",
     "egg-ci": "^1.6.0",

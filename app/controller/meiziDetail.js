@@ -1,32 +1,31 @@
 /**
- * 有码 api
- * Created by cly on 2017/5/11.
+ * Created by cly on 2017/5/15.
  */
 
 module.exports = app=>{
-  
-  class DetailController extends app.Controller{
+
+  class MeiziDetailController extends app.Controller{
 
     async thumbList(){
       const ctx = this.ctx;
       //校验参数
       /**
-      const createRule = {
+       const createRule = {
         page: { type: 'number' },
       };
 
-      try {
+       try {
         ctx.validate(createRule);
       } catch (err) {
         ctx.logger.warn(err);
         this.fail(err);
         return;
       }
-      **/
-      //校验完成
+       **/
+        //校验完成
       const page = ctx.params.page || 1;
       try{
-        const data = await ctx.service.detail.thumbList(page);
+        const data = await ctx.service.meiziDetail.thumbList(page);
         this.success(data)
       }catch (e){
         this.fail(e);
@@ -44,7 +43,7 @@ module.exports = app=>{
       //校验完成
       const id = ctx.params.id;
       try{
-        const data = await ctx.service.detail.detail(id);
+        const data = await ctx.service.meiziDetail.detail(id);
         this.success(data)
       }catch (e){
         this.fail(e);
@@ -56,5 +55,5 @@ module.exports = app=>{
 
   }
 
-  return DetailController;
+  return MeiziDetailController;
 };

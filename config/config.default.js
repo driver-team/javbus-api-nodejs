@@ -37,15 +37,48 @@ module.exports = appInfo => {
 
   //配置mongoose数据库
   config.mongoose = {
-    url: 'mongodb://localhost:27017/javbus',
-    options: {}
+    url: [{meizi:'mongodb://localhost:27017/meizi'},{javbus:'mongodb://localhost:27017/javbus'}],
+    //url:"mongodb://localhost:27017/meizi",
+    options: {},
   };
   
   //配置跨域白名单
-  config.security =  {
-    domainWhiteList: ['http://localhost:8899'],
+  config.security = {
+    domainWhiteList: [ 'http://localhost:8899' ],
+    csrf: {
+      ignoreJSON: true, // 默认为 false，当设置为 true 时，将会放过所有 content-type 为 `application/json` 的请求,
+      enable: false,
+    },
   };
 
+  //配置调试端口
+  config.proxyworker = {
+    port: 10086,
+  };
+  config.mailCode = {
+    overTime:120 //时间戳超时时间120秒
+  };
+
+  //token的配置
+  config.tokenTime = {
+    refreshTime: 604800, // refreshToken超时时间7天 =  3600*24*7（s）
+    accessTime:86400,//accessToken的超时时间1天
+  };
+
+  //jswt的配置
+  config.jwt = {
+    secret: '$#06#'
+  };
+
+  // 配置需要的中间件，数组顺序即为中间件的加载顺序
+   config.middleware = ['accessLogger','tokenValidate'];
+
+   //配置tokenValidate中间件的属性
+   config.tokenValidate = {
+     enable:true,//false为关闭
+     //match:'/meizi',//匹配开启 math ignore不允许同时配置
+     ignore:/(\/oauth*)|(\/user\/isRegistered)/, //不校验部分
+   };
 
   return config;
 };
