@@ -9,7 +9,8 @@
 
 >使用jwt来做身份认证，设计使用两个token来做身份校验refreshToken,accessToken
 
-####Payload标准中注册的声明 (建议但不强制使用) ：
+#### Payload标准中注册的声明 (建议但不强制使用) 
+
 >注意：这里初次使用jwt会有一个坑，jwt建议使用以下的保留字段，但是必须注意exp字段必须大于签名时间。
 >还有一个大坑，moment组件生成的时间戳是string型，但是exp需要number型，所以moment生成的时间还要做转换
 
@@ -21,7 +22,7 @@
 * iat: jwt的签发时间
 * jti: jwt的唯一身份标识，主要用来作为一次性token,从而回避重放攻击。
 
-####设计描述
+#### 设计描述
 token|描述|生命周期|payload
 ----|----|----|----
 refreshToken|获得accessToken时携带，每次登陆注册时生成|7天|userId，exp，plt：设备类型， ip|
@@ -29,7 +30,7 @@ accessToken|api请求时携带，每次启动app和登陆注册时生成|24小�
 
 **安全规则**
 
-####登录以及注册
+#### 登录以及注册
 生成`refreshToken`并存到到数据库.
 
 `refreshToken`仅用来生成`accessToken`使用，替代账号密码，时间戳为7天
@@ -44,7 +45,7 @@ accessToken|api请求时携带，每次启动app和登陆注册时生成|24小�
 `refreshToken`存储与数据库的`token`字段。
 
 
-####刷新accessToken
+#### 刷新accessToken
 `accessToken`是api请求时携带的token，每次启动app，登录，注册时生成。存储于session中，由路由`/oauth/accessToken`发起。请求header需要携带refreshToken
 
 我们现在使用mongodb来替代session做键值对存储。
@@ -64,7 +65,7 @@ accessToken的payload组成：
 * data.plt:设备类别ios android web mobileWeb
 * jti:uuid用来做唯一识别码
 
-####api请求
+#### api请求
 
 api请求携带accessToken，基于jwt解密。主要通过payload获得
 `userId`,`platform`,`uuid`,然后与`session`的校验来检测准确性

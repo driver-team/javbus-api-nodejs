@@ -15,7 +15,11 @@ module.exports = app => {
       try{
         var start = pageSize * (page - 1);
         var count = await ctx.model.Detail.find({}).count();
-        var detailList = await ctx.model.Detail.find({}).skip(start).limit(pageSize);
+        var detailList = await ctx.model.Detail
+          .find({})
+          .sort('-dateNumber') //按日期排序
+          .skip(start)
+          .limit(pageSize);
         var list = detailList.map(t=>{
           return {thumbUrl:t.thumb,title:t.title,id:t.id};
         });

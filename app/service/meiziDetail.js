@@ -11,7 +11,11 @@ module.exports = app => {
       try{
         var start = pageSize * (page - 1);
         var count = await ctx.model.MeiziDetail.find({}).count();
-        var detailList = await ctx.model.MeiziDetail.find({}).skip(start).limit(pageSize);
+        var detailList = await ctx.model.MeiziDetail
+          .find({})
+          .sort('-date')
+          .skip(start)
+          .limit(pageSize);
         var list = detailList.map(t=>{
           return {thumbUrl:t.thumb,title:t.title,id:t.id};
         });
