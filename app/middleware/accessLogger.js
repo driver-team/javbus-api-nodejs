@@ -5,10 +5,12 @@
 'use strict';
 module.exports = (options,app)=>{
 
-  return function * logHttpInfo(next) {
-    app.logger.info("======>收到请求host header",this.header.host);
-    app.logger.info("======>收到请求body",this.body);
-    yield next;
+  return async function  logHttpInfo(ctx,next) {
+    app.logger.info("======>收到请求 ip",ctx.ip);
+    if(ctx.body){
+      app.logger.info("======>收到请求body",ctx.body);
+    }
+    await next();
     app.logger.info("<======请求结束，返回body");
   }
 };
