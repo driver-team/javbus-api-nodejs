@@ -20,19 +20,20 @@ module.exports = (options,app)=>{
       return;
     }
     console.log("校验accessToken");
-    //console.log("jwt",app.jwt);
-    //执行jwt解码
-    await app.jwt(ctx,next);
-   //检测超时
-    let clientAToken = ctx.state.user;
-    let currTime = moment().format("X");
-    if(currTime  > clientAToken.exp){
-      ctx.status = 200;
-      ctx.body = {status:401,message:"token已超时，请重新登录1"};
-      return;
-    }
-    //校验accessToken
+
+
     try{
+      //执行jwt解码
+      await app.jwt(ctx,next);
+      //检测超时
+      let clientAToken = ctx.state.user;
+      let currTime = moment().format("X");
+      if(currTime  > clientAToken.exp){
+        ctx.status = 200;
+        ctx.body = {status:401,message:"token已超时，请重新登录"};
+        return;
+      }
+      //校验accessToken
       await ctx.service.oauth.validateAccessToken();
     } catch (e){
       ctx.status = 200;

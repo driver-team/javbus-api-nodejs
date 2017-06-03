@@ -2,9 +2,9 @@
 
 // had enabled by egg
 exports.static = true;
-console.log("__dirname",__dirname);
-const extendPath = __dirname.replace("config","app/extend/");
-console.log("extend路径",extendPath);
+//console.log("__dirname",__dirname);
+const pluginsPath = __dirname.replace("config","app/plugins/");
+//console.log("pluginsPath路径",pluginsPath);
 // 开启校验插件
 exports.validate = {
   enable: true,
@@ -22,7 +22,7 @@ exports.mongoose = {
   enable: true,
   //package: 'egg-mongoose',
   //path:"/Users/cly/Desktop/nodeProject/egg-mongoose-multiple",
-  path:extendPath+"egg-mongoose-multiple"
+  path:pluginsPath+"egg-mongoose-multiple"
 };
 
 //开启jwt插件

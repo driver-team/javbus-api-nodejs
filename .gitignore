@@ -1,7 +1,7 @@
 logs/
 npm-debug.log
 node_modules/
-coverage/
+#coverage/
 .idea/
 run/
 .DS_Store
