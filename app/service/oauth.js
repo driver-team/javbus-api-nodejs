@@ -3,26 +3,9 @@
  * Created by cly on 2017/5/26.
  */
 
-
-//token生成规则 超时时间戳,userId,platform
-//使用AES对字符串加密解密
-//使用crypto的Cipher加密
-//使用crypto的Decipher解密
-
-/**
- * token校验
- * 1 解析token获得超时时间戳,userId platform
- * 2 根据platform+userId从session获得token 或者根据platform+userId从数据库获得token
- * 3 判断token是否相等，并判断时间戳是否超时
- */
-
-
 var moment = require("moment");
 var crypto = require('crypto');
 var uuidV1 = require("uuid/v1");
-
-
-
 
 module.exports = app=>{
 
@@ -34,6 +17,17 @@ module.exports = app=>{
      */
     async validate(){
       const {ctx } = this;
+      //token生成规则 超时时间戳,userId,platform
+      //使用AES对字符串加密解密
+      //使用crypto的Cipher加密
+      //使用crypto的Decipher解密
+      /**
+       * token校验
+       * 1 解析token获得超时时间戳,userId platform
+       * 2 根据platform+userId从session获得token 或者根据platform+userId从数据库获得token
+       * 3 判断token是否相等，并判断时间戳是否超时
+       */
+
       /**
       //加密测试
       let currTime = moment().format("X");
@@ -54,11 +48,12 @@ module.exports = app=>{
       let fromUserId = fromArray[1];
       let fromPlatform   = fromArray[2];
        //从session或者数据库获得realToken
-       **/
+
       let decodeBody = ctx.state.user;
       let {platform} = ctx.request.headers;
       if(platform !== decodeBody.platform)
         return true;
+       **/
     }
 
     /**
@@ -96,12 +91,13 @@ module.exports = app=>{
       const {ctx} = this;
       const {email,password} = ctx.request.body;
       try{
-        let queryResult =   await ctx.model.User.find({email:email});
+        let queryResult =   await ctx.model.User.findOne({email:email});
         //账号不存在
-        if(!queryResult || queryResult.length === 0){
+        if(!queryResult){
           return {status:204, message:"账号不存在"}
         }
         //账号存在
+        queryResult = queryResult._doc;
         if(queryResult.password === password){
           let userId = queryResult.userId;
           //获得refreshToken
@@ -155,7 +151,8 @@ module.exports = app=>{
         //更新
         if(isExist && isExist.length>0){
           await ctx.model.Token.where({userId:userId,platform:platform}).update(tokenObj).exec();
-        }else{//保存
+        }else{
+          //保存
           let token = new ctx.model.Token(tokenObj);
           await token.save();
         }
@@ -179,13 +176,14 @@ module.exports = app=>{
       //uuid存入mongodb的session存储
       try{
         let userIdStr = userId.toString();
-        //查询
+        //查询userId对应的session
         let result = await  ctx.model.MSession.findOne({key:userIdStr});
-        result = result._doc;
-        //存在platform对应的uuid,更新
-        if(result && result.hasOwnProperty(platform)){
+        result = result?result._doc:undefined;
+          //session存在,更新
+        if(result){
           await ctx.model.MSession.where({key:userIdStr}).update({[platform]:uuid}).exec();
-        } else{//不 保存
+        } else{
+          //session不存在，保存
           let _mSession = new ctx.model.MSession({
             key:userIdStr,
             [platform]:uuid,
@@ -221,7 +219,7 @@ module.exports = app=>{
 
       try{
         let result = await ctx.model.Token.findOne({userId:userId});
-        let queryToken = result._doc;
+        let queryToken = result?result._doc:undefined;
         if(!queryToken || queryToken.platform !== clientRToken.data.plt ||
             queryToken.expTimestamp !== clientRToken.exp){
            throw {status:401,message:"token超时，请重新登录"};
@@ -244,7 +242,7 @@ module.exports = app=>{
       try{
          //查询
         let result = await  ctx.model.MSession.findOne({key:userId});
-        let querySession = result._doc;
+        let querySession = result?result._doc:undefined;
         //console.log(querySession[platform] === clientAToken.jti);
         if(! querySession ||  querySession[platform] !== clientAToken.jti ){
            throw {status:401,message:"token超时，请重新登录2"};

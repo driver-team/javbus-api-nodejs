@@ -9,7 +9,10 @@ module.exports = app =>{
 
   const  mSessionSchema = Schema({
     key:{type: String,unique:true,required:true,index:true},//session的id
-    web:{type:String}
+    ios:{type:String},
+    android:{type:String},
+    mobileWeb:{type:String},
+    web:{type:String},
   });
   //return null;
   return mongoose.model("mSession",mSessionSchema);

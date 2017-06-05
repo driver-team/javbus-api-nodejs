@@ -37,7 +37,7 @@ module.exports = appInfo => {
 
   //配置mongoose数据库
   config.mongoose = {
-    url: [{meizi:'mongodb://localhost:27017/meizi'},{javbus:'mongodb://localhost:27017/javbus'}],
+    url: [{meizi:'mongodb://hammer1:*#06#@localhost:27017/meizi'},{javbus:'mongodb://hammer2:*#06#@localhost:27017/javbus'}],
     //url:"mongodb://localhost:27017/meizi",
     options: {},
   };
