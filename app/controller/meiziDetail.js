@@ -42,6 +42,7 @@ module.exports = app=>{
 
       //校验完成
       const id = ctx.params.id;
+      //console.log("id",id);
       try{
         const data = await ctx.service.meiziDetail.detail(id);
         this.success(data)

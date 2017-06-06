@@ -12,7 +12,7 @@ module.exports  = app =>{
     title:String,
     thumb:String,
     tag:Array,
-    id:{type:Number,unique:true,required:true,index:true},
+    id:{type:String,unique:true,required:true,index:true},
     images:Array,
     date:String,
     index:{type:Number}

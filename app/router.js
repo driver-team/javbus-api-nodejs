@@ -2,11 +2,11 @@
 
 module.exports = app => {
   //app.get('/', 'home.index');
-  app.redirect('/', '/page');
+  //app.redirect('/', '/page');
   //app.get("/news","news.list");
-  app.get("/page","detail.thumbList");
-  app.get("/page/:page","detail.thumbList");
-  app.get("/detail/:id","detail.detail");
+  //app.get("/javbus/page","detail.thumbList");
+  app.get("/javbus/page/:page","detail.thumbList");
+  app.get("/javbus/detail/:id","detail.detail");
   app.get("/meizi/page/:page","meiziDetail.thumbList");
   app.get("/meizi/detail/:id","meiziDetail.detail");
   app.get("/mail/sendCode/:toEmail","mail.sendCode");

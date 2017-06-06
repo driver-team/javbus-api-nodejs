@@ -46,7 +46,7 @@ module.exports = app=>{
       //校验规则
       const createRule = {
         email: { type: 'email' },
-        code:  { type: 'number'}
+        code:  { type: 'string'}
       };
       try {
         ctx.validate(createRule); //默认是校验ctx.request.body
@@ -57,11 +57,14 @@ module.exports = app=>{
       }
       //post 参数 ctx.request.body;
       //校验完成
-      const {email,code} = ctx.request.body;
+      let {email,code} = ctx.request.body;
+
       try{
+        code = Number.parseInt(code);
         const data = await ctx.service.mail.validateCode({email,code});
         this.success(data)
       }catch (e){
+        ctx.logger.error(e.toString());
         this.fail(e);
       }
     }

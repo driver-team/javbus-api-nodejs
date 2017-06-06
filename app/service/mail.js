@@ -33,7 +33,7 @@ module.exports = app => {
         to:email,
         subject: 'j网站的验证码', // Subject line
         //text: 'Hello world ?', // plain text body
-        html: `<b>您的验证码是:【${code}】，有效期2分钟</b>` // html body
+        html: `<b>您的验证码是:【${code}】，有效期30分钟</b>` // html body
       }
       ctx.logger.info("[发送目标邮箱: %s]",email);
 
@@ -61,18 +61,20 @@ module.exports = app => {
      // const  ctx = this.ctx;
       try{
         let currTime = moment().format("X");
-        let selectTime = currTime - Timeapp.mailCode.overTime;
-        let result = this.ctx.model.MailCode
-          .find({emial:email,code:code})
+        let selectTime = currTime - this.app.config.mailCode.overTime;
+        //console.log('selectTime',selectTime);
+        let result = await this.ctx.model.MailCode
+          .find({email:email,code:code})
           .where("timestamp").gte(selectTime)
           .sort("-timestamp")
           .limit(1)
           .exec();
+        //console.log(result);
         if(result && result.length>0){
           return {validate:1,message:"校验成功"}
         }
         else{
-          return {validate:0,message:"校验失败，验证码不存在"}
+          return {validate:0,message:"校验失败，验证码错误"}
         }
       } catch(e){
         throw  e;

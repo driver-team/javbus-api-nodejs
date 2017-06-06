@@ -29,25 +29,14 @@ module.exports = app => {
     }
 
     async detail(id){
-      const  ctx = this.ctx;
+      const ctx = this.ctx;
       try{
-
-        var data = await ctx.model.MeiziDetail.find({index:id});
-        // var data = await ctx.model.MeiziDetail.find({});
-        // data.forEach(function (x) {
-        //   //if(x.id == 5460){
-        //     var index = Number.parseInt(x.id);
-        //     ctx.model.MeiziDetail.update({"href":x.href},{"$set":{"index":index}})
-        //       .then(result=>{
-        //         console.log("success",result);
-        //       })
-        //       .catch(e=>console.log(e));
-        //   //}
-        // });
+        var data = await ctx.model.MeiziDetail.findOne({id:id.toString()});
+        console.log("data",data);
         if(data)
-          return data;
+          return data._doc;
         else
-          throw new Error("id 不存在");
+          return {};
       }
       catch(e){
         ctx.logger.error(e);

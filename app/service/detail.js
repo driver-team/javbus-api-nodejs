@@ -35,11 +35,11 @@ module.exports = app => {
     async detail(id){
       const  ctx = this.ctx;
       try{
-        var data = await ctx.model.Detail.find({id:id});
+        let data = await ctx.model.Detail.findOne({id:id});
         if(data)
-          return data;
+          return data._doc;
         else
-          throw new Error("id 不存在");
+          return {};
       }
       catch(e){
         ctx.logger.error(e);

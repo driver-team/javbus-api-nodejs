@@ -56,7 +56,7 @@ module.exports = appInfo => {
     port: 10086,
   };
   config.mailCode = {
-    overTime:120 //时间戳超时时间120秒
+    overTime:1800 //时间戳超时时间30分钟
   };
 
   //token的配置
@@ -77,7 +77,7 @@ module.exports = appInfo => {
    config.tokenValidate = {
      enable:true,//false为关闭
      //match:'/meizi',//匹配开启 math ignore不允许同时配置
-     ignore:/(\/oauth*)|(\/user\/isRegistered)/, //不校验部分
+     ignore:/(\/oauth*)|(\/user\/isRegistered)|(\/mail\/*)/, //不校验部分
    };
 
   return config;

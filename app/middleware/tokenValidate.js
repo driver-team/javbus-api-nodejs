@@ -27,6 +27,7 @@ module.exports = (options,app)=>{
       await app.jwt(ctx,next);
       //检测超时
       let clientAToken = ctx.state.user;
+      //console.log("clientAToken",clientAToken);
       let currTime = moment().format("X");
       if(currTime  > clientAToken.exp){
         ctx.status = 200;
