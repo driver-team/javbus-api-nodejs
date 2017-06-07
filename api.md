@@ -31,7 +31,7 @@ response body
 |get|  /meizi/page/{number}|获得某页数据||{"total": 2734,"page": "1","pageSize": 30,"data": [{"thumbUrl": "http:jpg","title": "标题","id": 5529},] }
 |get|/meizi/detail/{id}|获得某项的详情||{"tag": [],"images":[]}
 |get|  /javbus/page/{number}|获得某页数据||{"total": 2734,"page": "1","pageSize": 30,"data": [{"thumbUrl": "http:jpg","title": "标题","id": 5529},] }
-|get|/javbus/detail/{id}|获得某项的详情||[详情](#/javbus/detail/{id})| 
+|get|/javbus/detail/{id}|获得某项的详情||[详情](#javbusdetailid)| 
 
 #### /javbus/detail/{id}
 ```
