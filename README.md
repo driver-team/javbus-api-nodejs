@@ -6,6 +6,8 @@
 [api文档](./api.md
 )
 
+[httpCode大全](./HttpCode.md)
+
 ## QuickStart
 
 <!-- add docs here for user -->
